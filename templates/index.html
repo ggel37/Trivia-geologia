@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Trivia de Geología</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}">
+
+</head><body><div class="contenedor">
+
+    <h1>🌎 Trivia de Geología</h1>
+
+    <p class="descripcion">
+        Poné a prueba tus conocimientos respondiendo las siguientes preguntas.
+    </p>
+
+    <form method="POST">
+
+        {% for pregunta in preguntas %}
+
+        <div class="pregunta">
+
+            <h2>
+                {{ loop.index }}. {{ pregunta.pregunta }}
+            </h2>
+
+            {% set numero_pregunta = loop.index0 %}
+
+            {% for opcion in pregunta.opciones %}
+
+            <label>
+                <input
+                    type="radio"
+                    name="pregunta{{ numero_pregunta }}"
+                    value="{{ opcion }}"
+                    required
+                >
+
+                {{ opcion }}
+            </label>
+
+            {% endfor %}
+
+        </div>
+
+        {% endfor %}
+
+        <button type="submit">
+            Ver resultado
+        </button>
+
+    </form>
+
+    {% if resultado %}
+
+    <div class="resultado">
+        <h2>{{ resultado }}</h2>
+
+        <a href="/">
+            Volver a jugar
+        </a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body></html>
